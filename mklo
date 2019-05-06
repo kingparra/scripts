@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+create_loopback () (
+	# Make a sparse file, create a partition on it, and mount it to a loopback
+	# device. Useful for testing filesystems, or isolating projects from the rest
+	# of the directory hierarchy.
+	if [[ -f "${1}" ]]; then
+		echo 'File already exists' 1>&2
+		exit 1
+	elif [[ -z "${1}" ]]; then
+		echo 'No sparse image filename was supplied!' 1>&2
+		exit 2
+	else
+		truncate -s 10T "${1}" &&
+			# Create a sparse file that appears to be 10TiB.
+		sgdisk --zap-all --largest-new 0 "${1}" &&
+			# Make one large empty partition within the
+			# sparse file.
+		losetup --find --partscan "${1}" &&
+			# Map the sparse file to the first available
+			# loopback device and scan for partitions.
+		lsblk -I 7
+			# List all loopback devices and their descendants.
+	fi
+)
+
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+	create_loopback "${1}"
+fi
+

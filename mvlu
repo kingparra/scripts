@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+# rename files to lowercase, replacing spaces with underscores
+from pathlib import Path
+from sys import argv
+
+def main():
+    for arg in argv[1:]:
+        p = Path(arg).absolute()
+        p.rename(p.parent / p.name.lower().replace(" ", "_"))
+
+if __name__ == "__main__":
+    main()
+

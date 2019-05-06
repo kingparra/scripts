@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+rman () (
+	# memonic: Readable MAN
+	# centered and double spaced man page display.
+
+	# only here becuase sometimes I launch this from sessions that have an empty environment
+	COLUMNS="$(tput cols)"
+	shopt -s checkwinsize
+
+	env COLUMNS="$(( COLUMNS / 2 ))" \
+		man "${@}" \
+			| pr -o "$(( COLUMNS / 2 / 2 ))" -d -T \
+			| less
+) 2>/dev/null
+
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+	rman "${@}"
+fi
+
