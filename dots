@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+dots () {
+	git --git-dir="$HOME/Projects/dotfiles" --work-tree="$HOME" "$@"
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+	dots "$@"
+fi
+
