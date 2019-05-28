@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
-as2ip () (
+as2ip () {
 	# list the ip addresses within an autonomous system
 	whois -h 'whois.radb.net' -- -i 'origin' "AS${1}" |
-		grep   '^route:'     |
-		cut -d ':' -f 2      |
-		sed -e 's/^[ \t]*//' |
-		sort -n -t .   \
-			-k 1,1     \
-			-k 2,2     \
-			-k 3,3     \
-			-k 4,4           |
-		cut -d ':' -f 2      |
-		sed -e 's/$//'
-)
+		grep '^route:' | cut -d ':' -f 2 |
+		sed -e 's/^[ \t]*//' | sort -n -t . \
+			-k 1,1   \
+			-k 2,2   \
+			-k 3,3   \
+			-k 4,4 |
+		cut -d ':' -f 2 | sed -e 's/$//'
+}
 
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-	as2ip "${@}"
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+	as2ip "$@"
 fi
 

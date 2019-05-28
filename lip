@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 lip () {
 	# _l_ocal _ip_
-	ip -color -brief address show "${@}"
+	ip -color -brief address show "$@"
 }
 
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-	lip "${@}"
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+	lip "$@"
 fi
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-getas () (
+getas () {
 	# get the autonomous system number for hostname(s)
-	ipv4pat='[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
-	whois -h v4.whois.cymru.com -v \
-		"$(getent ahostsv4 "${@}" | grep -E -o "${ipv4pat}" )" \
-	| tail -n 1 | awk '{print $1}'
-)
+	local ipv4pat='[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+	whois -h v4.whois.cymru.com -v "$(getent ahostsv4 "$@" | grep -E -o "$ipv4pat")" |
+		tail -n 1 | awk '{print $1}'
+}
 
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-	getas "${@}"
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+	getas "$@"
 fi
+

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-rman () (
+rman () {
 	# memonic: Readable MAN
 	# centered and double spaced man page display.
 
@@ -8,10 +8,10 @@ rman () (
 	shopt -s checkwinsize
 
 	env COLUMNS="$(( COLUMNS / 2 ))" \
-		man "${@}" \
-			| pr -o "$(( COLUMNS / 2 / 2 ))" -d -T \
-			| less
-) 2>/dev/null
+		man "${@}" |
+		pr -o "$(( COLUMNS / 2 / 2 ))" -d -T |
+		less
+} 2>/dev/null
 
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
