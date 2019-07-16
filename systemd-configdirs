@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+{
+echo system unit: "$(pkg-config systemd --variable=systemdsystemunitdir)"
+echo system conf: "$(pkg-config systemd --variable=systemdsystemconfdir)"
+echo user unit:   "$(pkg-config systemd --variable=systemduserunitdir)"
+echo user conf:   "$(pkg-config systemd --variable=systemduserconfdir)"
+echo units supplied by packages installed to HOME:  ~/.local/share/systemd/user
+echo where the user puts their own units:           ~/.config/systemd/uesr/
+} | column -s : -t
