@@ -5,11 +5,15 @@ from sys import argv
 
 
 def main():
+    
+    goodset = set('abcdefghijklmnopqrstuvwyxz0123456789:._-')
+
     for arg in argv[1:]:
         p = Path(arg).absolute()
-        p.rename(p.parent / p.name.lower().replace(" ", "_"))
+        p.rename(p.parent / ''.join(c for c in p.name.lower() if c in goodset))
 
 
 if __name__ == "__main__":
     main()
+
 
