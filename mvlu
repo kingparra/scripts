@@ -10,7 +10,7 @@ def main():
 
     for arg in argv[1:]:
         p = Path(arg).absolute()
-        p.rename(p.parent / ''.join(c for c in p.name.lower() if c in goodset))
+        p.rename(p.parent / ''.join(c for c in p.name.lower().replace(' ', '_') if c in goodset))
 
 
 if __name__ == "__main__":
