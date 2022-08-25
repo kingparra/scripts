@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+/usr/bin/borg create \
+	--verbose \
+	--stats \
+	--progress \
+	--exclude '/home/chris/.*' \
+	--exclude '/home/chris/Videos' \
+	--exclude '/home/chris/Downloads' \
+	de1862@de1862.rsync.net:precision_home::"$(date -I)" /home/chris/

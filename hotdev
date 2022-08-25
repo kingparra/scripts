@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+lsblk -o size,state,hotplug,tran,kname,model,serial | rosie match all.things;

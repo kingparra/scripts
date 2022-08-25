@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+tb () {
+	exec 7<>/dev/tcp/termbin.com/9999
+	cat "$1" >&7
+	cat <&7
+	exec 7<&-
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+	tb "$1"
+fi
+

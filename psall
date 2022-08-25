@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Get list of format specifiers from "ps L" and keep the first column.
+IFS=$' \t\n' readarray -t spec < <(ps L | cut -d ' ' -f 1)
+
+# Format the specifiers into a comma-separated list.
+format_list=$(printf -- '%s,' "${spec[@]}")
+
+# List all proccesses -e, in wide mode -w, with all of the format specifiers -o "$format_list".
+# Take additional options to ps with "$@".
+# View it in the pager less, and don't hard wrap lines -S.
+ps -we --forest -o "$format_list" "$@" | less -S

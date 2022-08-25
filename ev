@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# usage
+#
+# $ ev source-file
+#
+# Source a file full of variables definitions,
+# mark them for export, and then print their
+# definitnions to stdout.
+#
+# The twist is, variables may span many lines,
+# and are not guarunteed to be one per line.
+#
+# This script evaluates arbitrary code, since
+# eval is used to read in the variable
+# definitions.
+#
+
+getvars() { IFS=$'\n' readarray -d $'\n' -t -- "$1" <<< "$(compgen -v)"; }
+
+# shellcheck disable=SC1090
+# shellcheck disable=SC2154
+getvars oldnames &&
+source "$1" &&
+getvars newnames &&
+IFS=$'\n' readarray -d $'\n' -t \
+	uniquenames \
+	<<< "$(comm -1 -3 \
+			<(printf '%s\n' "${oldnames[@]}" | sort -u) \
+			<(printf '%s\n' "${newnames[@]}" | sort -u))" &&
+unset -v oldnames newnames PIPESTATUS &&
+for name in "${uniquenames[@]}"; do
+	if test "$name" != PIPESTATUS
+	then declare -x "$name" && declare -p "$name"
+	fi
+done
+
+# vim: set list ts=2 sts=2 sw=2 noexpand
