@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# List all processes on the system, with all of the possible output columns!
+
 # Get list of format specifiers from "ps L" and keep the first column.
 IFS=$' \t\n' readarray -t spec < <(ps L | cut -d ' ' -f 1)
 
